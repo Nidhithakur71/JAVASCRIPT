@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Booking Form</title>
+    <style>
+        *{
+            margin-top: 10px;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Restaurant Booking Form</h2>
+    <div class="container">
+    <form id="bookingForm">
+        <label for="bookingChoice">Choice of Booking:</label>
+        <select id="bookingChoice" onchange="updateForm()">
+            <option value="fullDay">Full Day Booking</option>
+            <option value="halfDay">Half Day Booking</option>
+            <option value="hourly">Hourly Booking</option>
+        </select>
+        <br><br>
+        
+        <label for="userName">User Name:</label>
+        <input type="text" id="userName" required>
+        <br><br>
+        
+        <label for="mobileNumber">Mobile Number:</label>
+        <input type="text" id="mobileNumber" required>
+        <br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <br><br>
+        
+        <label for="noOfPerson">No. of Persons:</label>
+        <input type="number" id="noOfPerson" required>
+        <br><br>
+        
+        <div id="dateDiv">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+            <br><br>
+        </div>
+        
+        <div id="timeSlotDiv">
+            <label for="timeSlot">Time Slot:</label>
+            <select id="timeSlot">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+            </select>
+            <br><br>
+        </div>
+        
+        <div id="timeDiv">
+            <label for="time">Time:</label>
+            <input type="time" id="time" required>
+            <br><br>
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+    <script >
+        document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('bookingForm');
+    const bookingTypeSelect = form.bookingType;
+    const dateInput = form.date;
+    const timeInput = form.time;
+    const slotSelect = form.slot;
+
+    bookingTypeSelect.addEventListener('change', function() {
+        const selectedValue = bookingTypeSelect.value;
+
+        dateInput.style.display = selectedValue === 'fullDay' ? 'block' : 'none';
+        slotSelect.style.display = selectedValue === 'halfDay' ? 'block' : 'none';
+        dateInput.required = selectedValue === 'fullDay' || selectedValue === 'halfDay';
+        timeInput.style.display = selectedValue === 'hourly' ? 'block' : 'none';
+        timeInput.required = selectedValue === 'hourly';
+    });
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        form.reset();
+    });
+
+    bookingTypeSelect.dispatchEvent(new Event('change'));
+});
+    </script>
+</body>
+</html>
+
+
